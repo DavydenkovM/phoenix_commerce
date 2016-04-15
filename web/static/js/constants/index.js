@@ -1,0 +1,10 @@
+const Constants = {
+    USER_SIGNED_IN: 'USER_SIGNED_IN',
+    CURRENT_USER: 'CURRENT_USER',
+    FETCH_PRODUCTS: 'FETCH_PRODUCTS',
+    CREATE_PRODUCT: 'CREATE_PRODUCT'
+};
+
+export default Constants;
+
+

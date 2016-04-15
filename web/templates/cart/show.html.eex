@@ -1,0 +1,25 @@
+<h2> Your cart </h2>
+<div class="cart">
+  <table>
+  <thead>
+    <tr>
+      <th> Product </th>
+      <th> Quantity </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for cart_item <- @cart_items do %>
+      <tr class="product-<%= cart_item.product_id %>">
+        <td> <%= cart_item.product.name %> </td>
+        <td> <%= cart_item.quantity %> </td>
+        <td> 
+          <%= link "Remove from cart", to: cart_item_path(@conn, :delete, cart_item), method: :delete, class: "remove-from-cart" %>
+
+          <%= render "form.html", changeset: PhoenixCommerce.CartItem.changeset(cart_item), action_path: cart_item_path(@conn, :update, cart_item) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+  </table>
+</div>

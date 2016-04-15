@@ -1,0 +1,4 @@
+<%= form_for @changeset, @action_path, fn f -> %>
+  <%= number_input f, :quantity, class: "quantity" %>
+  <%= submit("Update") %>
+<% end %>
