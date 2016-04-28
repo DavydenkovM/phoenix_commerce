@@ -4,13 +4,25 @@ import { Link }                from 'react-router';
 import { connect }             from 'react-redux';
 import Actions                 from '../actions/products';
 import * as form_actions            from 'redux-form';
-import {httpGet, httpPost} from '../utils';
+import {httpGet, httpPost, httpPostForm} from '../utils';
 
 class ProductFormContainer extends React.Component {
   _handleSubmit(values) {
     return new Promise((resolve, reject) => {
-      httpPost(`/api/products/`,
-          {product: JSON.parse(this.stringify(values))})
+      // let data = JSON.parse(this.stringify(values));
+      let form_data = new FormData();
+
+      Object.keys(values).forEach((key) => {
+        let obj = values[key];
+
+        if (values[key] instanceof FileList) {
+          form_data.append(`product[${key}]`, values[key][0], values[key][0].name);
+        } else {
+          form_data.append(`product[${key}]`, values[key]);
+        }
+      });
+
+      httpPostForm(`/api/products/`, form_data)
       .then((response) => {
         resolve();
       })
@@ -33,9 +45,9 @@ class ProductFormContainer extends React.Component {
   }
 
   replacer(key, value) {
-    if (value instanceof FileList) {
-      return Array.from(value).map(file => file.name).join(', ') || 'No Files Selected';
-    }
+    // if (value instanceof FileList) {
+    //   return Array.from(value).map(file => file.name).join(', ') || 'No Files Selected';
+    // }
     return value;
   }
 

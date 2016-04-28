@@ -36,12 +36,22 @@ export function httpGet(url) {
 }
 
 export function httpPost(url, data) {
-  const body = JSON.stringify(data);
-
   return fetch(url, {
     method: 'post',
     headers: buildHeaders(),
-    body: body,
+    body: data,
+  })
+  .then(checkStatus)
+    .then(parseJSON);
+}
+
+export function httpPostForm(url, data) {
+  return fetch(url, {
+    method: 'post',
+    headers: {
+      'Accept': 'application/json'
+    },
+    body: data,
   })
   .then(checkStatus)
     .then(parseJSON);

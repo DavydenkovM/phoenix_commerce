@@ -3,7 +3,7 @@ defmodule PhoenixCommerce.Api.ProductController do
 
   alias PhoenixCommerce.Product
 
-  @upload %Plug.Upload{path: Path.relative_to_cwd("test/files/demo.jpg"), filename: "demo.jpg", content_type: "image/jpg"}
+  # @upload %Plug.Upload{path: Path.relative_to_cwd("test/files/demo.jpg"), filename: "demo.jpg", content_type: "image/jpg"}
 
   plug :scrub_params, "product" when action in [:create, :update]
 
