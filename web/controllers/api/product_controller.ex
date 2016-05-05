@@ -1,9 +1,8 @@
 defmodule PhoenixCommerce.Api.ProductController do
   use PhoenixCommerce.Web, :controller
+  require IEx
 
   alias PhoenixCommerce.Product
-
-  # @upload %Plug.Upload{path: Path.relative_to_cwd("test/files/demo.jpg"), filename: "demo.jpg", content_type: "image/jpg"}
 
   plug :scrub_params, "product" when action in [:create, :update]
 
@@ -12,7 +11,10 @@ defmodule PhoenixCommerce.Api.ProductController do
 
     case Repo.insert(changeset) do
       {:ok, _product} ->
+        IEx.pry
+
         conn
+        |> put_status(:ok)
         |> render("index.json", status: :ok)
       {:error, changeset} ->
         conn
@@ -36,10 +38,10 @@ defmodule PhoenixCommerce.Api.ProductController do
     changeset = Product.changeset(product, product_params)
 
     case Repo.update(changeset) do
-      {:ok, product} ->
+      {:ok, _product} ->
         conn
         |> put_flash(:info, "Product updated successfully.")
-        |> redirect(to: product_path(conn, :show, product))
+        |> render("index.json", status: :ok)
       {:error, changeset} ->
         render(conn, "edit.html", product: product, changeset: changeset)
     end
@@ -52,6 +54,6 @@ defmodule PhoenixCommerce.Api.ProductController do
 
     conn
     |> put_flash(:info, "Product deleted successfully.")
-    |> redirect(to: product_path(conn, :index))
+    |> render("index.json", status: :ok)
   end
 end

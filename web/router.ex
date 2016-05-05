@@ -23,7 +23,6 @@ defmodule PhoenixCommerce.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
-    resources "products", ProductController
     get "/cart", CartController, :show
     post "/cart/add", CartController, :add, as: :add_to_cart
     resources "/cart_items", CartItemController

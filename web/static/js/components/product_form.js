@@ -11,11 +11,10 @@ class ProductForm extends React.Component {
   };
 
   render() {
-    console.log('in form', this.props);
     const {fields: {name, description, price, image}, handleSubmit, resetForm, submitting, error} = this.props;
 
     return (
-      <div className="product form">
+      <div className="product_form">
         <div className="inner">
           <form onSubmit={handleSubmit} encType="multipart/form-data">
             <div className="form-group">

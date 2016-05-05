@@ -4,14 +4,14 @@ import Product from './product'
 export default class ProductItem extends Component {
   render() {
     const { product } = this.props
-    const { price, quantity, name, description } = product
+    const { price, quantity, name, description, image } = product
 
     return (
       <li style={{ marginBottom: 20 }}>
         <Product
           name={name}
           description={name}
-          image={name}
+          image={image}
           price={price} 
         />
       </li>

@@ -86,3 +86,20 @@ export function renderErrorsFor(errors, ref) {
   });
 }
 
+export function handleError(error, reject) {
+  error.response.json()
+  .then((json) => {
+    let response = {};
+
+    Object.keys(json.errors).map((key) => {
+      Object.assign(response, {[key] : json.errors[key]});
+    });
+
+    if (json.errors) {
+      return reject({...response, _error: 'Login failed!'});
+    } else {
+      return reject({_error: 'Something went wrong!'});
+    };
+  });
+}
+

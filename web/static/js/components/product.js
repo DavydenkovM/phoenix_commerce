@@ -3,12 +3,12 @@ import { Link } from 'react-router'
 
 export default class Product extends Component {
   render() {
-    const { price, quantity, name, description } = this.props
+    const { price, quantity, name, description, image } = this.props
       return (
         <div> 
           <Link to='qwe'> {name} </Link>
           <h4> {price} </h4>
-          <img src={'qwe'}></img>
+          <img src={image}></img>
           <p>{description}</p>
         </div>
       )

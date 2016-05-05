@@ -37,7 +37,7 @@ defmodule PhoenixCommerce.Product do
       model
       |> Map.take([:id, :description, :price])
       |> Map.put(:name, model.description)
-      |> Map.put(:image, PhoenixCommerce.ProductView.product_image(model))
+      |> Map.put(:image, PhoenixCommerce.Api.ProductView.product_image(model))
       |> Poison.Encoder.encode(options)
     end
   end

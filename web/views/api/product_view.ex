@@ -5,7 +5,7 @@ defmodule PhoenixCommerce.Api.ProductView do
     products
   end
 
-  def render("index.json", resp=%{status: status}) do
+  def render("index.json", %{status: status}) do
     %{status: status}
   end
 
