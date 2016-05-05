@@ -16,7 +16,7 @@ defmodule PhoenixCommerce.Router do
   scope "/api", PhoenixCommerce.Api, as: :api do
     pipe_through :api
 
-    resources "/products", ProductController, only: [:create, :index]
+    resources "/products", ProductController, only: [:create, :index, :update, :show, :delete]
   end
 
   scope "/", PhoenixCommerce do
@@ -24,16 +24,10 @@ defmodule PhoenixCommerce.Router do
 
     get "/", PageController, :index
     resources "products", ProductController
-    resources "/admin/products", ProductController
     get "/cart", CartController, :show
     post "/cart/add", CartController, :add, as: :add_to_cart
     resources "/cart_items", CartItemController
 
     get "*path", PageController, :index
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", PhoenixCommerce do
-  #   pipe_through :api
-  # end
 end

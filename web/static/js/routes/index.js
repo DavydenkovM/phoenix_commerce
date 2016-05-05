@@ -9,6 +9,8 @@ export default function configRoutes() {
       <Route path="/admin">
         <Route path="products" component={ProductsContainer} />
         <Route path="products/new" component={ProductFormContainer} />
+        <Route path="products/:id/edit" component={ProductFormContainer} />
+        <Route path="products/:id/show" component={ProductFormContainer} />
       </Route>
     </Route>
   );

@@ -7,40 +7,45 @@ import * as form_actions            from 'redux-form';
 import {httpGet, httpPost, httpPostForm} from '../utils';
 
 class ProductFormContainer extends React.Component {
-  _handleSubmit(values) {
+  handleSubmit(values) {
     return new Promise((resolve, reject) => {
-      // let data = JSON.parse(this.stringify(values));
-      let form_data = new FormData();
-
-      Object.keys(values).forEach((key) => {
-        let obj = values[key];
-
-        if (values[key] instanceof FileList) {
-          form_data.append(`product[${key}]`, values[key][0], values[key][0].name);
-        } else {
-          form_data.append(`product[${key}]`, values[key]);
-        }
-      });
-
-      httpPostForm(`/api/products/`, form_data)
+      httpPostForm(`/api/products/`, this.form_data(values))
       .then((response) => {
         resolve();
       })
       .catch((error) => {
-        error.response.json()
-        .then((json) => {
-          let responce = {};
-          Object.keys(json.errors).map((key) => {
-            Object.assign(responce, {[key] : json.errors[key]});
-          });
-
-          if (json.errors) {
-            reject({...responce, _error: 'Login failed!'});
-          } else {
-            reject({_error: 'Something went wrong!'});
-          };
-        });
+        this.handle_error(error, reject)
       });
+    });
+  }
+
+  form_data(values) {
+    let form_data = new FormData();
+
+    Object.keys(values).forEach((key) => {
+      if (values[key] instanceof FileList) {
+        form_data.append(`product[${key}]`, values[key][0], values[key][0].name);
+      } else {
+        form_data.append(`product[${key}]`, values[key]);
+      }
+    });
+
+    return form_data;
+  }
+
+  handle_error(error, reject) {
+    error.response.json()
+    .then((json) => {
+      let response = {};
+      Object.keys(json.errors).map((key) => {
+        Object.assign(response, {[key] : json.errors[key]});
+      });
+
+      if (json.errors) {
+        reject({...response, _error: 'Login failed!'});
+      } else {
+        reject({_error: 'Something went wrong!'});
+      };
     });
   }
 
@@ -62,7 +67,7 @@ class ProductFormContainer extends React.Component {
       <div>
         <h2> New product </h2>
 
-        <ProductForm title="Add product" onSubmit={::this._handleSubmit} />
+        <ProductForm title="Add product" onSubmit={::this.handleSubmit} />
 
         <Link to='/admin/products'> Back </Link>
       </div>

@@ -2,9 +2,9 @@ defmodule PhoenixCommerce.CartController do
   use PhoenixCommerce.Web, :controller
   alias PhoenixCommerce.{CartItem, Cart}
 
-  plug :add_cart
+  plug :set_cart
 
-  def add_cart(conn, _opts) do
+  def set_cart(conn, _opts) do
     cart = case get_session(conn, :cart_uuid) do
       nil ->
         Repo.insert!(%Cart{})
@@ -32,10 +32,12 @@ defmodule PhoenixCommerce.CartController do
 
   def add(conn, %{"product" => %{"id" => product_id}}) do
     CartItem.changeset(%CartItem{}, %{
-     product_id: product_id,
-     quantity: 1,
-     cart_id: conn.assigns[:cart].id
-   }) |> Repo.insert!
+      product_id: product_id,
+      quantity: 1,
+      cart_id: conn.assigns[:cart].id
+    })
+    |> Repo.insert!
+
     redirect conn, to: cart_path(conn, :show)
   end
 end
