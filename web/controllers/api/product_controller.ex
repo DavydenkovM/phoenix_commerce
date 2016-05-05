@@ -1,7 +1,5 @@
 defmodule PhoenixCommerce.Api.ProductController do
   use PhoenixCommerce.Web, :controller
-  require IEx
-
   alias PhoenixCommerce.Product
 
   plug :scrub_params, "product" when action in [:create, :update]
@@ -11,8 +9,6 @@ defmodule PhoenixCommerce.Api.ProductController do
 
     case Repo.insert(changeset) do
       {:ok, _product} ->
-        IEx.pry
-
         conn
         |> put_status(:ok)
         |> render("index.json", status: :ok)
