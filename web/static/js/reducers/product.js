@@ -1,6 +1,6 @@
 import Constants from '../constants';
 
-const initialState = {items: []};
+const initialState = {item: undefined, items: []};
 
 const reducer = (state = initialState, action = {}) => {
   switch (action.type) {
@@ -10,6 +10,9 @@ const reducer = (state = initialState, action = {}) => {
       // );
 
        return {...state, items: [...state.items, ...action.products]};
+
+    case Constants.FETCH_PRODUCT:
+       return {...state, item: [...state.item, ...action.product]};
 
     default:
       return state;

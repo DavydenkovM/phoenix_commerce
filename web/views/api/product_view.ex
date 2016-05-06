@@ -5,6 +5,10 @@ defmodule PhoenixCommerce.Api.ProductView do
     products
   end
 
+  def render("show.json", %{product: product}) do
+    product
+  end
+
   def render("index.json", %{status: status}) do
     %{status: status}
   end

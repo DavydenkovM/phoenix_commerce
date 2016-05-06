@@ -26,7 +26,7 @@ defmodule PhoenixCommerce.Api.ProductController do
 
   def show(conn, %{"id" => id}) do
     product = Repo.get!(Product, id)
-    render(conn, "show.html", product: product)
+    render(conn, "show.json", product: product)
   end
 
   def update(conn, %{"id" => id, "product" => product_params}) do

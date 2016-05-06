@@ -2,6 +2,18 @@ import Constants  from '../constants';
 import {httpGet, httpPost} from '../utils';
 
 const Actions = {
+  getProduct: (id) => {
+    return dispatch => {
+      httpGet(`/api/products/${id}`)
+      .then((data) => {
+        dispatch({
+          type: Constants.FETCH_PRODUCT,
+          product: data,
+        });
+      });
+    };
+  },
+
   getProducts: () => {
     return dispatch => {
       httpGet(`/api/products/`)
